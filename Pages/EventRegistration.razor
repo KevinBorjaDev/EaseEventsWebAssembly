@@ -1,0 +1,38 @@
+@page "/events/register"
+@inject EventService EventService
+
+<EditForm Model="@eventModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="eventName">Nombre del Evento</label>
+        <InputText id="eventName" class="form-control" @bind-Value="eventModel.Name" />
+        <ValidationMessage For="@(() => eventModel.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="eventDate">Fecha del Evento</label>
+        <InputDate id="eventDate" class="form-control" @bind-Value="eventModel.Date" />
+        <ValidationMessage For="@(() => eventModel.Date)" />
+    </div>
+
+    <div class="form-group">
+        <label for="eventLocation">Lugar del Evento</label>
+        <InputText id="eventLocation" class="form-control" @bind-Value="eventModel.Location" />
+        <ValidationMessage For="@(() => eventModel.Location)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Evento</button>
+</EditForm>
+
+@code {
+    private EventModel eventModel = new EventModel();
+
+    private void HandleValidSubmit()
+    {
+        EventService.AddEvent(eventModel);
+        Console.WriteLine($"Evento guardado: {eventModel.Name}, {eventModel.Date}, {eventModel.Location}");
+        eventModel = new EventModel(); // Reiniciar el formulario
+    }
+}

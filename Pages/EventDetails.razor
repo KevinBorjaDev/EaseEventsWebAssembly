@@ -1,0 +1,33 @@
+@page "/events/details/{eventName}"
+@inject EventService EventService
+
+@code {
+    [Parameter]
+    public string? EventName { get; set; }
+
+    private EventModel? selectedEvent;
+
+    protected override void OnInitialized()
+    {
+        selectedEvent = EventService.GetEvents().FirstOrDefault(e => e.Name == EventName);
+    }
+}
+
+@if (selectedEvent == null)
+{
+    <p>Evento no encontrado.</p>
+}
+else
+{
+    <h3>Detalles del Evento</h3>
+    <dl class="row">
+        <dt class="col-sm-3">Nombre</dt>
+        <dd class="col-sm-9">@selectedEvent.Name</dd>
+
+        <dt class="col-sm-3">Fecha</dt>
+        <dd class="col-sm-9">@selectedEvent.Date?.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Lugar</dt>
+        <dd class="col-sm-9">@selectedEvent.Location</dd>
+    </dl>
+}

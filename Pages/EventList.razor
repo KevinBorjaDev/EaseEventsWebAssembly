@@ -1,0 +1,19 @@
+@page "/events/list"
+@inject EventService EventService
+
+<h3>Lista de Eventos</h3>
+
+@if (EventService.GetEvents().Count == 0)
+{
+    <p>No hay eventos registrados. <NavLink href="/events/register">Crear un evento</NavLink></p>
+}
+else
+{
+    <div>
+        @foreach (var eventItem in EventService.GetEvents())  
+        {
+            Console.WriteLine($"Renderizando evento: {eventItem.Name}");
+            <Components.EventCard Event="eventItem" />
+        }
+    </div>
+}
