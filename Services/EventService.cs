@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 
 public class EventService
 {
@@ -6,6 +5,7 @@ public class EventService
 
     public void AddEvent(EventModel eventModel)
     {
+        Console.WriteLine($"EVENTO A AGREGAR: {eventModel.Id}");
         events.Add(eventModel);
     }
 
@@ -16,5 +16,10 @@ public class EventService
             Console.WriteLine($"Eventos: {evento.Name}");
         }
         return events;
+    }
+
+    public EventModel GetEventById(int id)
+    {
+        return events.FirstOrDefault(e => e.Id == id);
     }
 }

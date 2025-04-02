@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Twoh463ch4w=",
+  "dgSpecHash": "b+t6kSKT34U=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Kevin-dev\\Documents\\PROYECTOS\\PRACTICAS\\CERTIFICADO\\BLAZOR\\EventEaseWebAssembly\\EventEaseWebAssembly\\EventEaseWebAssembly.csproj",
+  "projectFilePath": "C:\\Users\\Kevin-dev\\Documents\\PROYECTOS\\PRACTICAS\\CERTIFICADO\\BLAZOR\\EventEaseWebAssembly\\EventEaseWebAssembly\\EventEaseWebAssembly.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kevin-dev\\.nuget\\packages\\microsoft.aspnetcore.authorization\\9.0.2\\microsoft.aspnetcore.authorization.9.0.2.nupkg.sha512",
     "C:\\Users\\Kevin-dev\\.nuget\\packages\\microsoft.aspnetcore.components\\9.0.2\\microsoft.aspnetcore.components.9.0.2.nupkg.sha512",

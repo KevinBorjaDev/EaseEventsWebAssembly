@@ -1,38 +1,55 @@
 @page "/events/register"
 @inject EventService EventService
+@inject UserSessionService UserSessionService
 
-<EditForm Model="@eventModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<h3>Event Registration</h3>
 
-    <div class="form-group">
-        <label for="eventName">Nombre del Evento</label>
-        <InputText id="eventName" class="form-control" @bind-Value="eventModel.Name" />
-        <ValidationMessage For="@(() => eventModel.Name)" />
+@if (isEventSaved)
+{
+    <div class="alert alert-success" role="alert">
+        ¡Event saved successfully!
     </div>
+}
 
-    <div class="form-group">
-        <label for="eventDate">Fecha del Evento</label>
-        <InputDate id="eventDate" class="form-control" @bind-Value="eventModel.Date" />
-        <ValidationMessage For="@(() => eventModel.Date)" />
-    </div>
+@if(UserSessionService.IsUserLoggedIn())
+{
+    <EditForm Model="@eventModel" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <div class="form-group">
-        <label for="eventLocation">Lugar del Evento</label>
-        <InputText id="eventLocation" class="form-control" @bind-Value="eventModel.Location" />
-        <ValidationMessage For="@(() => eventModel.Location)" />
-    </div>
+        <div class="form-group">
+            <label for="eventName">Event Name</label>
+            <InputText id="eventName" class="form-control" @bind-Value="eventModel.Name" />
+            <ValidationMessage For="@(() => eventModel.Name)" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">Guardar Evento</button>
-</EditForm>
+        <div class="form-group">
+            <label for="eventDate">Event Date</label>
+            <InputDate id="eventDate" class="form-control" @bind-Value="eventModel.Date" />
+            <ValidationMessage For="@(() => eventModel.Date)" />
+        </div>
+
+        <div class="form-group">
+            <label for="eventLocation">Event location</label>
+            <InputText id="eventLocation" class="form-control" @bind-Value="eventModel.Location" />
+            <ValidationMessage For="@(() => eventModel.Location)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save event</button>
+    </EditForm>
+}
+else {
+    <p>To be able to create a new event. Please, <NavLink href="/login">Login</NavLink></p>
+}
 
 @code {
-    private EventModel eventModel = new EventModel();
-
+    private EventModel eventModel = new EventModel { Date = DateTime.Today }; 
+    private bool isEventSaved = false; 
     private void HandleValidSubmit()
     {
         EventService.AddEvent(eventModel);
         Console.WriteLine($"Evento guardado: {eventModel.Name}, {eventModel.Date}, {eventModel.Location}");
-        eventModel = new EventModel(); // Reiniciar el formulario
+        isEventSaved = true;
+        eventModel = new EventModel { Date = DateTime.Today };
     }
 }

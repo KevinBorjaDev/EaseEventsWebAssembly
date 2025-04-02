@@ -1,0 +1,44 @@
+@code {
+    [Parameter]
+    public EventModel Event { get; set; }
+
+    private string newAttendee = string.Empty;
+
+    private void AddAttendee()
+    {
+        if (!string.IsNullOrWhiteSpace(newAttendee) && !Event.Attendees.Contains(newAttendee))
+        {
+            Event.Attendees.Add(newAttendee);
+            newAttendee = string.Empty;
+        }
+    }
+
+    private void RemoveAttendee(string attendee)
+    {
+        Event.Attendees.Remove(attendee);
+    }
+}
+
+<h4>Attendees</h4>
+
+@if (Event.Attendees.Count == 0)
+{
+    <p class="text-muted">No attendees for this event.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var attendee in Event.Attendees)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                @attendee
+                <button class="btn btn-danger btn-sm" @onclick="() => RemoveAttendee(attendee)">Delete</button>
+            </li>
+        }
+    </ul>
+}
+
+<div class="input-group mt-3">
+    <input type="text" class="form-control" @bind="newAttendee" placeholder="Attendee Name" />
+    <button class="btn btn-success" @onclick="AddAttendee">Add</button>
+</div>

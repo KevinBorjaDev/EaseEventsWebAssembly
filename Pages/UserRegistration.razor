@@ -1,0 +1,46 @@
+@page "/users/register"
+@inject UserSessionService UserSessionService
+
+<h3>Register User</h3>
+<EditForm Model="@userModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="userName">Username</label>
+        <InputText id="userName" class="form-control" @bind-Value="userModel.UserName" />
+        <ValidationMessage For="@(() => userModel.UserName)" />
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="userModel.Email" />
+        <ValidationMessage For="@(() => userModel.Email)" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="userModel.Password" />
+        <ValidationMessage For="@(() => userModel.Password)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register User</button>
+</EditForm>
+
+@if (isUserRegistered)
+{
+    <div class="alert alert-success" role="alert">
+        ¡User registered successfully!
+    </div>
+}
+
+@code {
+    private UserModel userModel = new UserModel();
+    private bool isUserRegistered = false;
+
+    private void HandleValidSubmit()
+    {
+        UserSessionService.RegisterUser(userModel);
+        isUserRegistered = true;
+        userModel = new UserModel();
+    }
+}

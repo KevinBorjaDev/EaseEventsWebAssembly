@@ -1,19 +1,23 @@
 @page "/events/list"
 @inject EventService EventService
+@inject UserSessionService UserSessionService
+@using EventEaseWebAssembly.Components
 
-<h3>Lista de Eventos</h3>
+<h3>Event List</h3>
 
-@if (EventService.GetEvents().Count == 0)
+@if(UserSessionService.IsUserLoggedIn())
 {
-    <p>No hay eventos registrados. <NavLink href="/events/register">Crear un evento</NavLink></p>
+    @if (EventService.GetEvents().Count == 0)
+    {
+        <p>There are no events. <NavLink href="/events/register">Create a new event</NavLink></p>
+    }
+    else
+    {
+        <Virtualize Items="@EventService.GetEvents()" Context="eventItem">
+            <EventCard Event="eventItem" />
+        </Virtualize>
+    }
 }
-else
-{
-    <div>
-        @foreach (var eventItem in EventService.GetEvents())  
-        {
-            Console.WriteLine($"Renderizando evento: {eventItem.Name}");
-            <Components.EventCard Event="eventItem" />
-        }
-    </div>
+else {
+    <p>Login to view events. <NavLink href="/login">Login</NavLink></p>
 }

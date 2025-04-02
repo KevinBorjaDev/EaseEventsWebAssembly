@@ -1,12 +1,26 @@
 ﻿@inherits LayoutComponentBase
+@inject UserSessionService UserSessionService;
+@inject NavigationManager NavigationManager;
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        <div class="top-row px-4 d-flex">
+            @if (!userLogged)
+            {
+                <div>
+                    <a href="/login" class="btn btn-link">Login</a>
+                    <a href="/users/register" class="btn btn-link">Register</a>
+                </div>
+            }
+            else
+            {
+                <p style="align-self: end;">You're now logged as <b>@userName</b></p>
+                <button class="btn btn-link" @onclick="Logout">Logout</button>
+            }
         </div>
 
         <article class="content px-4">
@@ -14,3 +28,36 @@
         </article>
     </main>
 </div>
+
+@code
+{
+    bool userLogged;
+    string userName;
+
+    protected override void OnInitialized()
+    {
+        userLogged = UserSessionService.IsUserLoggedIn();
+        userName = UserSessionService.GetCurrentUser()?.UserName ?? "Guest";
+
+        UserSessionService.Subscribe(OnUserSessionChanged);
+    }
+
+    private void OnUserSessionChanged(bool isLoggedIn)
+    {
+        userLogged = isLoggedIn;
+        userName = isLoggedIn ? UserSessionService.GetCurrentUser()?.UserName ?? "Guest" : string.Empty;
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void Logout()
+    {
+        UserSessionService.Logout();
+        NavigationManager.NavigateTo("/login", forceLoad: false);
+    }
+
+    public void Dispose()
+    {
+        UserSessionService.Unsubscribe(OnUserSessionChanged);
+    }
+}

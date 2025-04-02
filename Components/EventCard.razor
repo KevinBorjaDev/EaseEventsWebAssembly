@@ -1,0 +1,33 @@
+@inject NavigationManager Navigation
+@inherits LayoutComponentBase
+
+@if (Event == null || string.IsNullOrWhiteSpace(Event.Name) || Event.Date == null || string.IsNullOrWhiteSpace(Event.Location))
+{
+    <div class="event-card error">
+        <p>Data from event invalid.</p>
+    </div>
+}
+else
+{
+    <div class="event-card" @onclick="NavigateToDetails">
+        <div class="event-details">
+            <h2>@Event.Name</h2>
+            <p><strong>Date:</strong> @Event.Date?.ToString("dd/MM/yyyy")</p>
+            <p><strong>Location:</strong> @Event.Location</p>
+            <p><strong>Attendees:</strong> @Event.Attendees.Count</p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public EventModel Event { get; set; }
+
+    private void NavigateToDetails()
+    {
+        if (Event != null && !string.IsNullOrWhiteSpace(Event.Name) && Event.Date != null && !string.IsNullOrWhiteSpace(Event.Location))
+        {
+            Navigation.NavigateTo($"/events/details/{Event.Id}");
+        }
+    }
+}

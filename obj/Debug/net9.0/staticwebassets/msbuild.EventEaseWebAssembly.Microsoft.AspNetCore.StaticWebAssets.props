@@ -30,8 +30,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ApplicationBundle</AssetTraitValue>
-      <Fingerprint>k543aei7us</Fingerprint>
-      <Integrity>yFnIIEZqh05Dv6/nxjRBynFvg8IG8SAxARBpds00Xts=</Integrity>
+      <Fingerprint>3ev7kirg61</Fingerprint>
+      <Integrity>VZl1abrEb1bqh/Hx6NZMFKOqrIBrwH/DPCoKI9jM+tI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\EventEaseWebAssembly.styles.css'))</OriginalItemSpec>

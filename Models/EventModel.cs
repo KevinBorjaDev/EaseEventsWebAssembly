@@ -2,15 +2,29 @@ using System.ComponentModel.DataAnnotations;
 
 public class EventModel
 {
-  [Required(ErrorMessage = "El nombre del evento es obligatorio.")]
-  [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres.")]
-  public string Name { get; set; }
+    private static int _idCounter = 1;
 
-  [Required(ErrorMessage = "La fecha del evento es obligatoria.")]
-  [DataType(DataType.Date, ErrorMessage = "Debe ser una fecha válida.")]
-  public DateTime? Date { get; set; }
+    public EventModel()
+    {
+        Id = _idCounter++;
+        Attendees = new List<string>();
+    }
 
-  [Required(ErrorMessage = "El lugar del evento es obligatorio.")]
-  [StringLength(200, ErrorMessage = "El lugar no puede exceder los 200 caracteres.")]
-  public string Location { get; set; }
+    public int Id { get; private set; }
+
+    [Required(ErrorMessage = "The Event name is required.")]
+    [StringLength(100, ErrorMessage = "The Event name cannot be more than 100 characters.")]
+    public string Name { get; set; }
+
+    [Required(ErrorMessage = "The event date is required.")]
+    [DataType(DataType.Date, ErrorMessage = "It must be a valid date.")]
+    public DateTime? Date { get; set; }
+
+    [Required(ErrorMessage = "The event location is required.")]
+    [StringLength(200, ErrorMessage = "The event location cannot be more than 200 characters.")]
+    public string Location { get; set; }
+
+    public List<string> Attendees { get; set; }
 }
+
+
